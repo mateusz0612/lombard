@@ -1,0 +1,1 @@
+export { getRegistrationErrorMessage } from "./getRegistrationErrorMessage";
