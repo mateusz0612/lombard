@@ -6,29 +6,28 @@ interface UserProviderProps {
   children: React.ReactNode[] | React.ReactNode;
 }
 
-type UserType = User | null;
-type ContextState = { user: UserType };
+interface ContextState {
+  user: User | null;
+}
 
 const Context = createContext<ContextState | undefined>(undefined);
 
 export const UserProvider: FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    return unsubscribe;
-  }, [user]);
-
-  const userContextValue = {
+  const userContextValue: ContextState = {
     user,
   };
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <Context.Provider value={userContextValue}>{children}</Context.Provider>
