@@ -1,21 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import { RegisterForm } from "../components/RegisterForm/RegisterForm.component";
+import { LandingPage } from "../views/LandingPage";
 
 enum Paths {
   LandingPage = "/",
-  Register = "/register",
-  Login = "/login",
 }
 
-const LandingPage = () => <h2>Landing</h2>;
-const Register = () => <RegisterForm />;
-const Login = () => <h2>Login</h2>;
-
-const routes = [
-  { path: Paths.LandingPage, Component: LandingPage },
-  { path: Paths.Register, Component: Register },
-  { path: Paths.Login, Component: Login },
-];
+const routes = [{ path: Paths.LandingPage, Component: LandingPage }];
 
 export const RouteList = () => {
   return (
