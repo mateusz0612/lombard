@@ -2,18 +2,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useRegister } from "../../hooks/useRegister";
 import {
-  defaultRegisterFormData,
-  registerFormSchema,
-} from "./RegisterForm.schema";
+  createClientFormSchema,
+  defaultCreateClientFormData,
+} from "./CreateClientForm.schema";
 
-export const useRegisterForm = () => {
+export const useCreateClientForm = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm({
-    defaultValues: defaultRegisterFormData,
-    resolver: yupResolver(registerFormSchema),
+    defaultValues: defaultCreateClientFormData,
+    resolver: yupResolver(createClientFormSchema),
     mode: "onChange",
   });
 

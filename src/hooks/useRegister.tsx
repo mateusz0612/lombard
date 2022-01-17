@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IUserRegisterData } from "../types";
-import { auth, db } from "../firebase";
+import { IClientData } from "../types";
+import { auth, db, Collections } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   UserCredential,
@@ -20,14 +20,16 @@ export const useRegister = () => {
 
   const handleRegisterSuccess = async (
     userCredentials: UserCredential,
-    userRegisterData: IUserRegisterData
+    userRegisterData: IClientData
   ) => {
     const userId = userCredentials?.user.uid;
-    const { username, email } = userRegisterData;
+    const { firstName, secondName, email, personalIdNumber } = userRegisterData;
 
     try {
-      setDoc(doc(db, "users", userId), {
-        username,
+      setDoc(doc(db, Collections.USERS, userId), {
+        firstName,
+        secondName,
+        personalIdNumber,
         email,
       });
     } catch (error) {
@@ -35,7 +37,7 @@ export const useRegister = () => {
     }
   };
 
-  const registerUser = async (userRegisterData: IUserRegisterData) => {
+  const registerUser = async (userRegisterData: IClientData) => {
     const { email, password } = userRegisterData;
     setisRegisterProgressing(true);
     try {

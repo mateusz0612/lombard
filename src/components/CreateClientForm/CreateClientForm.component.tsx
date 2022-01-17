@@ -1,27 +1,41 @@
 import { FC } from "react";
-import { FormHeader, FormErrorLabel } from "../styled";
+import { Label, FormErrorLabel } from "../styled";
 import { Stack, TextField } from "@mui/material";
-import { useRegisterForm } from "./RegisterForm.hooks";
-import * as Styled from "./RegisterForm.styled";
+import { useCreateClientForm } from "./CreateClientForm";
+import * as Styled from "./CreateClientForm.styled";
 
-export const RegisterForm: FC = () => {
+export const CreateClientForm: FC = () => {
   const {
     register,
     onRegisterFormSubmit,
     errors,
     isRegisterProgressing,
     registerError,
-  } = useRegisterForm();
+  } = useCreateClientForm();
 
   return (
-    <Stack spacing={3} maxWidth={300}>
-      <FormHeader>Rejestracja</FormHeader>
+    <Stack spacing={3} width={320}>
+      <Label fontSize={36}>Stwórz klienta</Label>
       <TextField
-        label="Nazwa użytkownika"
+        label="Imię"
         variant="outlined"
-        error={!!errors?.username}
-        helperText={errors?.username?.message}
-        {...register("username")}
+        error={!!errors?.firstName}
+        helperText={errors?.firstName?.message}
+        {...register("firstName")}
+      />
+      <TextField
+        label="Nazwisko"
+        variant="outlined"
+        error={!!errors?.secondName}
+        helperText={errors?.secondName?.message}
+        {...register("secondName")}
+      />
+      <TextField
+        label="Pesel"
+        variant="outlined"
+        error={!!errors?.personalIdNumber}
+        helperText={errors?.personalIdNumber?.message}
+        {...register("personalIdNumber")}
       />
       <TextField
         label="Email"
@@ -47,13 +61,13 @@ export const RegisterForm: FC = () => {
         helperText={errors?.repeatPassword?.message}
         {...register("repeatPassword")}
       />
-      <Styled.RegisterButton
+      <Styled.CreateClientButton
         variant="contained"
         onClick={onRegisterFormSubmit}
         disabled={isRegisterProgressing}
       >
-        Zarejestruj
-      </Styled.RegisterButton>
+        Stwórz klienta
+      </Styled.CreateClientButton>
       {registerError && <FormErrorLabel>{registerError}</FormErrorLabel>}
     </Stack>
   );
