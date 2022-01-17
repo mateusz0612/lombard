@@ -1,18 +1,24 @@
-import { Routes, Route } from "react-router-dom";
-import { LandingPage } from "../views/LandingPage";
+import { Route } from "react-router-dom";
+import { EmployeePanel } from "../views/EmployeePanel";
+import { LandingPage } from "../views/LandingPage/LandingPage.component";
 
-enum Paths {
+export enum Paths {
   LandingPage = "/",
+  EmployeePanel = "/employee-panel",
 }
 
-const routes = [{ path: Paths.LandingPage, Component: LandingPage }];
+export const RouteList = [
+  <Route
+    key={Paths.LandingPage}
+    path={Paths.LandingPage}
+    element={<LandingPage />}
+  />,
+];
 
-export const RouteList = () => {
-  return (
-    <Routes>
-      {routes.map(({ path, Component }) => (
-        <Route key={path} path={path} element={<Component />} />
-      ))}
-    </Routes>
-  );
-};
+export const ProtectedRouteList = [
+  <Route
+    key={Paths.EmployeePanel}
+    path={Paths.EmployeePanel}
+    element={<EmployeePanel />}
+  />,
+];

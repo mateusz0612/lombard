@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Label, FormErrorLabel } from "../styled";
 import { Stack, TextField } from "@mui/material";
-import { useCreateClientForm } from "./CreateClientForm";
+import { useCreateClientForm } from "./CreateClientForm.hook";
 import * as Styled from "./CreateClientForm.styled";
 
 export const CreateClientForm: FC = () => {

@@ -14,7 +14,7 @@ export const useRegister = () => {
   const [isRegisterProgressing, setisRegisterProgressing] = useState(false);
 
   const handleRegisterError = (error: AuthError) => {
-    console.log(error);
+    console.error(error);
     setRegisterError(getRegistrationErrorMessage(error?.code));
   };
 

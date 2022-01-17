@@ -5,3 +5,8 @@ export interface IClientData {
   personalIdNumber: string;
   password: string;
 }
+
+export interface IUserCredentials {
+  email: string;
+  password: string;
+}
