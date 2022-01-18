@@ -1,21 +1,28 @@
-import { BrowserRouter, Routes } from "react-router-dom";
-import { RouteList, ProtectedRouteList } from "./routes";
-import { useUserContext } from "./contexts/UserContext";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { RouteList, ProtectedRouteList, Paths } from "./routes";
+import { Loader } from "./components/Loader";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
 
 function App() {
-  const user = useUserContext();
-
-  console.log(user);
+  const [user, loading] = useAuthState(auth);
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          {RouteList}
-          {user && ProtectedRouteList}
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <Loader isLoading={loading}>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            {RouteList}
+            {user && ProtectedRouteList}
+            <Route
+              key={Paths.DefaultRoute}
+              path={Paths.DefaultRoute}
+              element={<Navigate to={Paths.LandingPage} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </Loader>
   );
 }
 
