@@ -3,13 +3,15 @@ import { RouteList, ProtectedRouteList, Paths } from "./routes";
 import { Loader } from "./components/Loader";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
+import { GlobalStyle } from "./components/styled";
 
 function App() {
   const [user, loading] = useAuthState(auth);
 
   return (
-    <Loader isLoading={loading}>
-      <div className="App">
+    <div className="App">
+      <GlobalStyle />
+      <Loader isLoading={loading}>
         <BrowserRouter>
           <Routes>
             {RouteList}
@@ -21,8 +23,8 @@ function App() {
             />
           </Routes>
         </BrowserRouter>
-      </div>
-    </Loader>
+      </Loader>
+    </div>
   );
 }
 
