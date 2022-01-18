@@ -6,6 +6,7 @@ interface LabelProps {
   fontSize?: number;
   fontWeight?: number;
   align?: "start" | "end" | "left" | "right" | "center" | "justify";
+  color?: string;
   children: ReactChild;
 }
 
@@ -17,10 +18,11 @@ export const Label: FC<LabelProps> = ({
   fontSize,
   fontWeight,
   align,
+  color,
   children,
 }) => {
   return (
-    <StyledLabel style={{ fontSize, fontWeight, textAlign: align }}>
+    <StyledLabel style={{ fontSize, fontWeight, color, textAlign: align }}>
       {children}
     </StyledLabel>
   );

@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 export interface IClientData {
   firstName: string;
   secondName: string;
@@ -14,3 +16,9 @@ export interface IUserCredentials {
 export type IUser = Omit<Omit<IClientData, "password">, "personalIdNumber"> & {
   uid: string;
 };
+
+export interface INavigationItem {
+  label: string;
+  icon: FC;
+  routeTo: string;
+}

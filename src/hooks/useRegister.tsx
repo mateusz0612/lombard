@@ -3,6 +3,7 @@ import { IClientData } from "../types";
 import { auth, db, Collections } from "../firebase";
 import {
   createUserWithEmailAndPassword,
+  updateProfile,
   UserCredential,
   AuthError,
 } from "firebase/auth";
@@ -18,23 +19,29 @@ export const useRegister = () => {
     setRegisterError(getRegistrationErrorMessage(error?.code));
   };
 
-  const handleRegisterSuccess = async (
-    userCredentials: UserCredential,
+  const updateUserCollection = async (
+    userUid: string,
     userRegisterData: IClientData
   ) => {
-    const userId = userCredentials?.user.uid;
-    const { firstName, secondName, email, personalIdNumber } = userRegisterData;
-
     try {
-      setDoc(doc(db, Collections.USERS, userId), {
-        firstName,
-        secondName,
-        personalIdNumber,
-        email,
+      await setDoc(doc(db, Collections.USERS, userUid), {
+        ...userRegisterData,
       });
     } catch (error) {
       handleRegisterError(error as AuthError);
     }
+  };
+
+  const handleRegisterSuccess = async (
+    userCredentials: UserCredential,
+    userRegisterData: IClientData
+  ) => {
+    const userUid = userCredentials?.user.uid;
+    const { firstName, secondName } = userRegisterData;
+    await updateUserCollection(userUid, userRegisterData);
+    await updateProfile(auth.currentUser!, {
+      displayName: `${firstName} ${secondName}`,
+    });
   };
 
   const registerUser = async (userRegisterData: IClientData) => {
