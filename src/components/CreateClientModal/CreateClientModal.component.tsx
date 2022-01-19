@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Modal, Button, Stack } from "@mui/material";
+import { Modal } from "../Modal";
+import { Button, Stack } from "@mui/material";
 import { CreateClientForm } from "../CreateClientForm";
 
 interface CreateClientModalProps {
@@ -28,7 +29,7 @@ export const CreateClientModal: FC<CreateClientModalProps> = ({
   };
 
   return (
-    <Modal open={isOpen}>
+    <Modal isOpen={isOpen}>
       <Stack sx={style} justifyContent="center" alignItems="center">
         <Button onClick={onModalClose}>Zamknij</Button>
         <CreateClientForm onSuccess={onModalClose} />
