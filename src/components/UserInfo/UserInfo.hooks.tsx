@@ -1,7 +1,7 @@
 import { useUserContext } from "../../contexts/UserContext";
 import { useLogout } from "../../hooks/useLogout";
 
-export const useEmployeeInfo = () => {
+export const useUserInfo = () => {
   const user = useUserContext();
   const { logout } = useLogout();
 

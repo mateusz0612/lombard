@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { IClientData } from "../types";
-import { auth, db, Collections } from "../firebase";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  UserCredential,
-  AuthError,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { IRegisterClientData } from "../types";
+import { db, Collections } from "../firebase";
+import { AuthError } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 import { getRegistrationErrorMessage } from "../helpers";
 
 export const useRegister = () => {
@@ -20,12 +15,14 @@ export const useRegister = () => {
   };
 
   const updateUserCollection = async (
-    userUid: string,
-    userRegisterData: IClientData
+    userRegisterData: IRegisterClientData
   ) => {
     try {
-      await setDoc(doc(db, Collections.USERS, userUid), {
-        ...userRegisterData,
+      await addDoc(collection(db, Collections.USERS), {
+        firstName: userRegisterData?.firstName,
+        secondName: userRegisterData?.secondName,
+        email: userRegisterData?.email,
+        personalIdNumber: userRegisterData?.personalIdNumber,
       });
     } catch (error) {
       handleRegisterError(error as AuthError);
@@ -33,31 +30,14 @@ export const useRegister = () => {
   };
 
   const handleRegisterSuccess = async (
-    userCredentials: UserCredential,
-    userRegisterData: IClientData
+    userRegisterData: IRegisterClientData
   ) => {
-    const userUid = userCredentials?.user.uid;
-    const { firstName, secondName } = userRegisterData;
-    await updateUserCollection(userUid, userRegisterData);
-    await updateProfile(auth.currentUser!, {
-      displayName: `${firstName} ${secondName}`,
-    });
+    await updateUserCollection(userRegisterData);
   };
 
-  const registerUser = async (userRegisterData: IClientData) => {
-    const { email, password } = userRegisterData;
+  const registerUser = async (userRegisterData: IRegisterClientData) => {
     setisRegisterProgressing(true);
-    try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      handleRegisterSuccess(userCredentials, userRegisterData);
-    } catch (error) {
-      handleRegisterError(error as AuthError);
-    }
+    handleRegisterSuccess(userRegisterData);
     setisRegisterProgressing(false);
   };
 

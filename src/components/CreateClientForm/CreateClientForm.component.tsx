@@ -4,14 +4,22 @@ import { Stack, TextField } from "@mui/material";
 import { useCreateClientForm } from "./CreateClientForm.hook";
 import * as Styled from "./CreateClientForm.styled";
 
-export const CreateClientForm: FC = () => {
+interface CreateClientFormProps {
+  onSuccess?: () => void;
+  onError?: () => void;
+}
+
+export const CreateClientForm: FC<CreateClientFormProps> = ({
+  onSuccess,
+  onError,
+}) => {
   const {
     register,
     onRegisterFormSubmit,
     errors,
     isRegisterProgressing,
     registerError,
-  } = useCreateClientForm();
+  } = useCreateClientForm(onSuccess, onError);
 
   return (
     <Stack spacing={3} width={320}>
@@ -44,22 +52,6 @@ export const CreateClientForm: FC = () => {
         error={!!errors?.email}
         helperText={errors?.email?.message}
         {...register("email")}
-      />
-      <TextField
-        label="Hasło"
-        type="password"
-        variant="outlined"
-        error={!!errors.password}
-        helperText={errors?.password?.message}
-        {...register("password")}
-      />
-      <TextField
-        label="Powtórz Hasło"
-        type="password"
-        variant="outlined"
-        error={!!errors?.repeatPassword}
-        helperText={errors?.repeatPassword?.message}
-        {...register("repeatPassword")}
       />
       <Styled.CreateClientButton
         variant="contained"

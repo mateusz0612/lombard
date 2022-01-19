@@ -5,3 +5,7 @@ export const LogoutButton = styled(LogoutIcon)`
   color: ${(props) => props.theme.pallete.white};
   cursor: pointer;
 `;
+
+export const ProfileTypeWrapper = styled.p`
+  font-weight: 400;
+`;

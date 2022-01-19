@@ -6,8 +6,8 @@ interface NavigationWrapperProps {
 }
 
 export const NavigationWrapper = styled.div<NavigationWrapperProps>`
-  width: 250px;
-  height: 100vh;
+  width: ${(props) => (props.isMobile ? "100%" : "250px")};
+  height: "auto";
   background: ${(props) => props.theme.pallete.navigationBackground};
 `;
 

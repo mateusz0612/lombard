@@ -1,21 +1,19 @@
 import { FC } from "react";
 
 export interface IClientData {
+  uid: string;
   firstName: string;
   secondName: string;
   email: string;
   personalIdNumber: string;
-  password: string;
 }
+
+export type IRegisterClientData = Omit<IClientData, "uid">;
 
 export interface IUserCredentials {
   email: string;
   password: string;
 }
-
-export type IUser = Omit<Omit<IClientData, "password">, "personalIdNumber"> & {
-  uid: string;
-};
 
 export interface INavigationItem {
   label: string;

@@ -1,13 +1,15 @@
 import { Route } from "react-router-dom";
+import { LandingPage } from "../views/LandingPage/LandingPage.component";
 import { EmployeeLogin } from "../views/EmployeeLogin";
 import { EmployeePanel } from "../views/EmployeePanel/EmployeePanel.component";
-import { LandingPage } from "../views/LandingPage/LandingPage.component";
+import { EmployeePanelClients } from "../views/EmployeePanelClients";
 
 export enum Paths {
   LandingPage = "/",
   DefaultRoute = "/*",
   EmployeeLogin = "/employee-login",
   EmployeePanel = "/employee-panel",
+  EmployeePanelClients = "/employee-panel-clients",
 }
 
 export const RouteList = [
@@ -28,5 +30,10 @@ export const ProtectedRouteList = [
     key={Paths.EmployeePanel}
     path={Paths.EmployeePanel}
     element={<EmployeePanel />}
+  />,
+  <Route
+    key={Paths.EmployeePanelClients}
+    path={Paths.EmployeePanelClients}
+    element={<EmployeePanelClients />}
   />,
 ];

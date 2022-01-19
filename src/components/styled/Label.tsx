@@ -7,7 +7,7 @@ interface LabelProps {
   fontWeight?: number;
   align?: "start" | "end" | "left" | "right" | "center" | "justify";
   color?: string;
-  children: ReactChild;
+  children: ReactChild | ReactChild[];
 }
 
 const StyledLabel = styled(FormLabel)`

@@ -1,30 +1,16 @@
-import { useMemo } from "react";
-import { INavigationItem } from "../../types";
-import AddIcon from "@mui/icons-material/Add";
-import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
-import MoneyIcon from "@mui/icons-material/Money";
+import { useUserContext } from "../../contexts/UserContext";
+import { useMediaQuery } from "@mui/material";
+import { theme } from "../../components/styled";
+import { ResponsiveStyleValue } from "@mui/system";
 
-export const useEmployeePanelNavigation = () => {
-  const navigationOptions: INavigationItem[] = useMemo(
-    () => [
-      {
-        label: "Pożyczki",
-        icon: MoneyIcon,
-        routeTo: "/",
-      },
-      {
-        label: "Przedmioty",
-        icon: LocalLaundryServiceIcon,
-        routeTo: "/",
-      },
-      {
-        label: "Dodaj klienta",
-        icon: AddIcon,
-        routeTo: "/",
-      },
-    ],
-    []
-  );
+export const useEmployeePanel = () => {
+  const user = useUserContext();
+  const isMobile = useMediaQuery(theme.queries.mobile);
 
-  return { navigationOptions };
+  const fullName = user?.user?.displayName as string;
+  const wrapperDirection: ResponsiveStyleValue<"column" | "row"> = isMobile
+    ? "column"
+    : "row";
+
+  return { fullName, wrapperDirection, isMobile };
 };
