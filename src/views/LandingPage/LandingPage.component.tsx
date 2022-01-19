@@ -11,23 +11,28 @@ export const LandingPage: FC = () => {
       alignItems="center"
       minWidth="100%"
       minHeight="100vh"
+      spacing={1}
     >
       <Label fontSize={32} fontWeight={700}>
         Witaj w systemie lombard!
       </Label>
-      <Label fontSize={32}>Zaloguj się aby rozpocząć.</Label>
-      <Stack spacing={2} mt={2}>
-        <Link
-          to={Paths.EmployeeLogin}
-          style={{
-            textDecoration: "none",
-          }}
-        >
-          <Button variant="contained" color="secondary">
-            Zaloguj się jako pracownik
-          </Button>
-        </Link>
-      </Stack>
+      <Label fontSize={32}>Sprawdź swoją pożyczkę za pomocą kodu.</Label>
+      <Button variant="contained" color="primary">
+        Sprawdź pożyczkę
+      </Button>
+      <Label fontSize={32}>
+        Jesteś pracownikiem? Zaloguj się aby rozpocząć.
+      </Label>
+      <Link
+        to={Paths.EmployeeLogin}
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <Button variant="contained" color="secondary">
+          Zaloguj się jako pracownik
+        </Button>
+      </Link>
     </Stack>
   );
 };
