@@ -10,18 +10,19 @@ import {
 } from "@mui/material";
 import { Loader } from "../Loader";
 import { IClientData } from "../../types";
-import { useDelete } from "../../hooks/useDelete";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Collections } from "../../firebase";
 
 interface ClientsListProps {
   clients: IClientData[];
   isLoading: boolean;
+  deleteClient: (uid: string) => void;
 }
 
-export const ClientsList: FC<ClientsListProps> = ({ clients, isLoading }) => {
-  const { deleteItem } = useDelete();
-
+export const ClientsList: FC<ClientsListProps> = ({
+  clients,
+  isLoading,
+  deleteClient,
+}) => {
   if (isLoading) {
     return <Loader />;
   }
@@ -55,10 +56,7 @@ export const ClientsList: FC<ClientsListProps> = ({ clients, isLoading }) => {
               <TableCell align="left">
                 <div
                   onClick={() => {
-                    deleteItem({
-                      uid: client?.uid,
-                      collection: Collections.USERS,
-                    });
+                    deleteClient(client?.uid);
                   }}
                 >
                   <DeleteIcon
