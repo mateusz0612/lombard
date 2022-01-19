@@ -3,15 +3,22 @@ import { Stack } from "@mui/material";
 import { Label } from "../../components/styled";
 import { EmployeeNavigation } from "../../components/EmployeeNavigation";
 import { useEmployeePanel } from "./EmployeePanel.hooks";
+import { theme } from "../../components/styled";
 import * as Styled from "./EmployeePanel.styled";
 
 export const EmployeePanel: FC = () => {
-  const { fullName, wrapperDirection } = useEmployeePanel();
+  const { fullName, wrapperDirection, isMobile } = useEmployeePanel();
 
   return (
     <Stack direction={wrapperDirection}>
       <EmployeeNavigation />
-      <Stack justifyContent="center" alignItems="center" width="90%">
+      <Stack
+        width={isMobile ? "100%" : "90%"}
+        justifyContent="center"
+        alignItems="center"
+        mt={20}
+        ml={!isMobile ? theme.employeePanelPageMargin : 0}
+      >
         <Label fontSize={32} align="center">
           Cześć, <Styled.FullNameLabel>{fullName}</Styled.FullNameLabel> miło
           cię znowu widzieć!
