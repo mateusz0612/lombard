@@ -12,7 +12,7 @@ export const useLogin = () => {
   const [loginError, setLoginError] = useState("");
 
   const handleLoginError = (error: AuthError) => {
-    console.error(error);
+    console.error(error?.code);
     setLoginError(getRegistrationErrorMessage(error?.code));
   };
 

@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { IRegisterClientData } from "../types";
 import { db, Collections } from "../firebase";
-import { AuthError } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
-import { getRegistrationErrorMessage } from "../helpers";
 
 export const useRegister = () => {
   const [registerError, setRegisterError] = useState("");
   const [isRegisterProgressing, setisRegisterProgressing] = useState(false);
 
-  const handleRegisterError = (error: AuthError) => {
+  const handleRegisterError = (error: Error) => {
     console.error(error);
-    setRegisterError(getRegistrationErrorMessage(error?.code));
+    setRegisterError(error?.message);
   };
 
   const updateUserCollection = async (
@@ -25,7 +23,7 @@ export const useRegister = () => {
         personalIdNumber: userRegisterData?.personalIdNumber,
       });
     } catch (error) {
-      handleRegisterError(error as AuthError);
+      handleRegisterError(error as Error);
     }
   };
 
