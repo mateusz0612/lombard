@@ -6,7 +6,10 @@ import {
   defaultCreateClientFormData,
 } from "./CreateClientForm.schema";
 
-export const useCreateClientForm = () => {
+export const useCreateClientForm = (
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
   const {
     handleSubmit,
     register,
@@ -20,7 +23,12 @@ export const useCreateClientForm = () => {
   const { registerUser, isRegisterProgressing, registerError } = useRegister();
 
   const onRegisterFormSubmit = handleSubmit((data) => {
-    registerUser(data);
+    try {
+      registerUser(data);
+      onSuccess && onSuccess();
+    } catch (e) {
+      onError && onError();
+    }
   });
 
   return {
