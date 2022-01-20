@@ -18,9 +18,9 @@ export const CreateLoanForm: FC = () => {
       <TextField
         label="Pesel"
         variant="outlined"
-        error={!!errors?.clientId}
-        helperText={errors?.clientId?.message}
-        {...register("clientId")}
+        error={!!errors?.personalIdNumber}
+        helperText={errors?.personalIdNumber?.message}
+        {...register("personalIdNumber")}
       />
       <TextField
         label="Stopa procentowa"
