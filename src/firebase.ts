@@ -18,6 +18,7 @@ const auth = getAuth(app);
 
 enum Collections {
   USERS = "users",
+  LOANS = "loans"
 }
 
 export { db, auth, Collections };

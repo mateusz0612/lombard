@@ -19,4 +19,26 @@ export interface INavigationItem {
   label: string;
   icon: FC;
   routeTo: string;
+};
+
+export type IUser = Omit<Omit<IClientData, "password">, "personalIdNumber"> & {
+  uid: string;
+};
+export interface ILoan {
+  id: string;
+  code: string;
+  clientId: string;
+  interest: number;
+  returnPrice: number;
+  dateOfLoan: Date | string;
+  employeeId: string;
+}
+
+export interface IItem {
+  id: string;
+  name: string;
+  clientId: string;
+  price: number;
+  description: string;
+  employeeId: string;
 }
