@@ -3,7 +3,8 @@ import { LandingPage } from "../views/LandingPage/LandingPage.component";
 import { EmployeeLogin } from "../views/EmployeeLogin";
 import { EmployeePanel } from "../views/EmployeePanel/EmployeePanel.component";
 import { EmployeePanelClients } from "../views/EmployeePanelClients";
-import { Loan } from "../views/Loan/Loan.component";
+import { Loan } from "../views/LoanPanel/Loan.component";
+import { LoanDetails } from "../views/LoanDetails/LoanDetails.component";
 
 export enum Paths {
   LandingPage = "/",
@@ -11,7 +12,8 @@ export enum Paths {
   EmployeeLogin = "/employee-login",
   EmployeePanel = "/employee-panel",
   EmployeePanelClients = "/employee-panel-clients",
-  LoanPanel = "/loan-panel"
+  LoanPanel = "/loan-panel",
+  LoanInfo = "/loan-info/:code"
 }
 
 export const RouteList = [
@@ -42,5 +44,10 @@ export const ProtectedRouteList = [
     key={Paths.LoanPanel}
     path={Paths.LoanPanel}
     element={<Loan />}
+  />,
+  <Route
+    key={Paths.LoanInfo}
+    path={Paths.LoanInfo}
+    element={<LoanDetails />}
   />,
 ];

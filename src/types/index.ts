@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { FC } from "react";
 
 export interface IClientData {
@@ -25,20 +26,23 @@ export type IUser = Omit<Omit<IClientData, "password">, "personalIdNumber"> & {
   uid: string;
 };
 export interface ILoan {
-  id: string;
   code: string;
-  clientId: string;
+  personalIdNumber: string;
   interest: number;
   returnPrice: number;
-  dateOfLoan: Date | string;
+  dateOfLoan: Timestamp;
   employeeId: string;
 }
 
 export interface IItem {
   id: string;
   name: string;
-  clientId: string;
+  personalIdNumber: string;
   price: number;
   description: string;
   employeeId: string;
+}
+
+export interface ICode {
+  code?: string
 }
