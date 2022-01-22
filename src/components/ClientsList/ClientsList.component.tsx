@@ -65,7 +65,13 @@ export const ClientsList: FC<ClientsListProps> = ({
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="left">
-                {client?.firstName} {client?.secondName}
+                <span
+                  style={{
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {client?.firstName} {client?.secondName}
+                </span>
               </TableCell>
               <TableCell align="left">{client?.email}</TableCell>
               <TableCell align="left">{client?.personalIdNumber}</TableCell>

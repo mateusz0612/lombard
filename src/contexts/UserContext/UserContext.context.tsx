@@ -8,12 +8,17 @@ interface UserProviderProps {
 
 interface ContextState {
   user: User | undefined;
+  clearUserContext: () => void;
 }
 
 const Context = createContext<ContextState | undefined>(undefined);
 
 export const UserProvider: FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | undefined>();
+
+  const clearUserContext = () => {
+    setUser(undefined);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -27,6 +32,7 @@ export const UserProvider: FC<UserProviderProps> = ({ children }) => {
 
   const userContextValue: ContextState = {
     user,
+    clearUserContext,
   };
 
   return (

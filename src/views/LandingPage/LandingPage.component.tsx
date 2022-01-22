@@ -14,7 +14,7 @@ export const LandingPage: FC = () => {
       spacing={1}
     >
       <Label fontSize={32} fontWeight={700}>
-        Witaj w systemie lombard!
+        Witaj w systemie LOMBARD!
       </Label>
       <Label fontSize={32}>Sprawdź swoją pożyczkę za pomocą kodu.</Label>
       <Button variant="contained" color="primary">
