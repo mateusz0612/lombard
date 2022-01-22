@@ -11,7 +11,7 @@ export const useClients = () => {
     const unsub = onSnapshot(
       collection(db, Collections.USERS),
       (usersCollections) => {
-        const clients: IClientData[] = [];
+        const snapshotClients: IClientData[] = [];
 
         for (const user of usersCollections?.docs) {
           const clientData: IClientData = {
@@ -22,10 +22,10 @@ export const useClients = () => {
             uid: user?.id,
           };
 
-          clients.push(clientData);
+          snapshotClients.push(clientData);
         }
 
-        setClients(clients);
+        setClients(snapshotClients);
         setIsLoading(false);
       }
     );

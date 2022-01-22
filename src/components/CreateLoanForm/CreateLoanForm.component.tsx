@@ -1,16 +1,11 @@
-import { Stack, TextField } from '@mui/material';
-import { FC } from 'react'
-import { Label } from '../styled';
-import { useCreateLoanForm } from './CreateLoanForm.hook';
-import * as Styled from "../CreateClientForm/CreateClientForm.styled";
+import { Stack, TextField } from "@mui/material";
+import { FC } from "react";
+import { Label } from "../styled";
+import { useCreateLoanForm } from "./CreateLoanForm.hook";
+import * as Styled from "../ClientForm/ClientForm.styled";
 
 export const CreateLoanForm: FC = () => {
-  const {
-    register,
-    onLoanFormSubmit,
-    errors,
-    isValid
-  } = useCreateLoanForm();
+  const { register, onLoanFormSubmit, errors, isValid } = useCreateLoanForm();
 
   return (
     <Stack spacing={3} width={320}>
@@ -47,4 +42,4 @@ export const CreateLoanForm: FC = () => {
       </Styled.CreateClientButton>
     </Stack>
   );
-}
+};
