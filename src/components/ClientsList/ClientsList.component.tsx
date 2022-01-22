@@ -25,6 +25,10 @@ const iconStyle = {
   cursor: "pointer",
 };
 
+const tableHeadingStyle = {
+  fontWeight: 700,
+};
+
 const defaultClientData: IClientData = {
   email: "",
   firstName: "",
@@ -51,11 +55,21 @@ export const ClientsList: FC<ClientsListProps> = ({
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">Imię i nazwisko</TableCell>
-            <TableCell align="left">Email</TableCell>
-            <TableCell align="left">Pesel</TableCell>
-            <TableCell align="left">Usuń</TableCell>
-            <TableCell align="left">Edytuj</TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Imię i nazwisko
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Email
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Pesel
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Usuń
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Edytuj
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
