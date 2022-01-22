@@ -14,6 +14,10 @@ interface ClientFormProps {
   defaultValues?: IRegisterClientData;
 }
 
+const inputStyles: React.CSSProperties = {
+  textTransform: "capitalize",
+};
+
 export const ClientForm: FC<ClientFormProps> = ({
   onSuccess,
   isProgressing,
@@ -35,6 +39,9 @@ export const ClientForm: FC<ClientFormProps> = ({
         variant="outlined"
         error={!!errors?.firstName}
         helperText={errors?.firstName?.message}
+        inputProps={{
+          style: inputStyles,
+        }}
         {...register("firstName")}
       />
       <TextField
@@ -42,6 +49,9 @@ export const ClientForm: FC<ClientFormProps> = ({
         variant="outlined"
         error={!!errors?.secondName}
         helperText={errors?.secondName?.message}
+        inputProps={{
+          style: inputStyles,
+        }}
         {...register("secondName")}
       />
       <TextField
