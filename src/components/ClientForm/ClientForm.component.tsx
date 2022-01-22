@@ -1,29 +1,35 @@
 import { FC } from "react";
 import { Label, FormErrorLabel } from "../styled";
 import { Stack, TextField } from "@mui/material";
-import { useCreateClientForm } from "./CreateClientForm.hook";
-import * as Styled from "./CreateClientForm.styled";
+import { useClientForm } from "./ClientForm.hook";
+import { IRegisterClientData } from "../../types";
+import * as Styled from "./ClientForm.styled";
 
-interface CreateClientFormProps {
-  onSuccess?: () => void;
-  onError?: () => void;
+interface ClientFormProps {
+  onSuccess: (data: IRegisterClientData) => void;
+  submitButtonText: string;
+  headingText: string;
+  isProgressing: boolean;
+  errorMessage: string;
+  defaultValues?: IRegisterClientData;
 }
 
-export const CreateClientForm: FC<CreateClientFormProps> = ({
+export const ClientForm: FC<ClientFormProps> = ({
   onSuccess,
-  onError,
+  isProgressing,
+  errorMessage,
+  submitButtonText,
+  headingText,
+  defaultValues,
 }) => {
-  const {
-    register,
-    onRegisterFormSubmit,
-    errors,
-    isRegisterProgressing,
-    registerError,
-  } = useCreateClientForm(onSuccess, onError);
+  const { register, onRegisterFormSubmit, errors } = useClientForm(
+    onSuccess,
+    defaultValues
+  );
 
   return (
     <Stack spacing={3} width={320}>
-      <Label fontSize={36}>Stwórz klienta</Label>
+      <Label fontSize={36}>{headingText}</Label>
       <TextField
         label="Imię"
         variant="outlined"
@@ -56,11 +62,11 @@ export const CreateClientForm: FC<CreateClientFormProps> = ({
       <Styled.CreateClientButton
         variant="contained"
         onClick={onRegisterFormSubmit}
-        disabled={isRegisterProgressing}
+        disabled={isProgressing}
       >
-        Stwórz klienta
+        {submitButtonText}
       </Styled.CreateClientButton>
-      {registerError && <FormErrorLabel>{registerError}</FormErrorLabel>}
+      {errorMessage && <FormErrorLabel>{errorMessage}</FormErrorLabel>}
     </Stack>
   );
 };

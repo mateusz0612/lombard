@@ -1,33 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useRegister } from "../../hooks/useRegister";
+import { IRegisterClientData } from "../../types";
 import {
   createClientFormSchema,
   defaultCreateClientFormData,
-} from "./CreateClientForm.schema";
+} from "./ClientForm.schema";
 
-export const useCreateClientForm = (
-  onSuccess?: () => void,
-  onError?: () => void
+export const useClientForm = (
+  onSuccess: (data: IRegisterClientData) => void,
+  defaultValues?: IRegisterClientData
 ) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm({
-    defaultValues: defaultCreateClientFormData,
+    defaultValues: defaultValues || defaultCreateClientFormData,
     resolver: yupResolver(createClientFormSchema),
     mode: "onChange",
   });
 
-  const { registerUser, isRegisterProgressing, registerError } = useRegister();
-
   const onRegisterFormSubmit = handleSubmit((data) => {
     try {
-      registerUser(data);
-      onSuccess && onSuccess();
-    } catch (e) {
-      onError && onError();
+      onSuccess(data);
+    } catch (error) {
+      console.error(error);
     }
   });
 
@@ -35,7 +32,5 @@ export const useCreateClientForm = (
     register,
     onRegisterFormSubmit,
     errors,
-    isRegisterProgressing,
-    registerError,
   };
 };
