@@ -1,1 +1,2 @@
-# Projekt Lombard. Inżynieria Oprogramowania 2022.
+# Projekt Lombard
+# Inżynieria Oprogramowania 2022.
