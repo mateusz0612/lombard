@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IRegisterClientData } from "../types";
 import { db, Collections } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { toast } from "../helpers";
 
 export const useRegister = () => {
   const [registerError, setRegisterError] = useState("");
@@ -10,6 +11,7 @@ export const useRegister = () => {
   const handleRegisterError = (error: Error) => {
     console.error(error);
     setRegisterError(error?.message);
+    toast("error", "Coś poszło nie tak. Spróbuj panownie.", false);
   };
 
   const updateUserCollection = async (

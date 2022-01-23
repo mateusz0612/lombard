@@ -1,5 +1,6 @@
-import { setDoc, doc, addDoc, collection } from 'firebase/firestore';
-import { db } from '../firebase';
+import { setDoc, doc, addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase";
+import { toast } from "../helpers";
 
 interface IPost {
   collectionName: string;
@@ -11,23 +12,26 @@ export const usePost = () => {
   const postDoc = async ({ collectionName, docId, payload }: IPost) => {
     try {
       await setDoc(doc(db, collectionName, docId), {
-        ...payload
+        ...payload,
       });
-
     } catch (error) {
-      throw new Error(error as string)
+      toast("error", "Coś poszło nie tak. Spróbuj panownie", false);
+      throw new Error(error as string);
     }
-  }
-  const postNewDoc = async ({ collectionName, payload }: Omit<IPost, "docId">) => {
+  };
+  const postNewDoc = async ({
+    collectionName,
+    payload,
+  }: Omit<IPost, "docId">) => {
     try {
       const docRef = await addDoc(collection(db, collectionName), {
-        ...payload
+        ...payload,
       });
       return docRef;
-
     } catch (error) {
-      throw new Error(error as string)
+      toast("error", "Coś poszło nie tak. Spróbuj panownie", false);
+      throw new Error(error as string);
     }
-  }
-  return { postDoc, postNewDoc }
-}
+  };
+  return { postDoc, postNewDoc };
+};

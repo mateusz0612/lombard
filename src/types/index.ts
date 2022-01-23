@@ -20,7 +20,7 @@ export interface INavigationItem {
   label: string;
   icon: FC;
   routeTo: string;
-};
+}
 
 export type IUser = Omit<Omit<IClientData, "password">, "personalIdNumber"> & {
   uid: string;
@@ -44,5 +44,10 @@ export interface IItem {
 }
 
 export interface ICode {
-  code?: string
+  code?: string;
+}
+
+export interface IModal {
+  isOpen: boolean;
+  closeModal: () => void;
 }

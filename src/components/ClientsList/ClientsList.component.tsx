@@ -9,21 +9,18 @@ import {
   Paper,
 } from "@mui/material";
 import { Loader } from "../Loader";
+import { ClientListItem } from "../ClientListItem";
 import { IClientData } from "../../types";
 import { EditClientModal } from "../EditClientModal";
+import { CreateLoanModal } from "../CreateLoanModal";
 import { useModal } from "../../hooks/useModal";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import { toast } from "../../helpers";
 
 interface ClientsListProps {
   clients: IClientData[];
   isLoading: boolean;
   deleteClient: (uid: string) => void;
 }
-
-const iconStyle = {
-  cursor: "pointer",
-};
 
 const tableHeadingStyle = {
   fontWeight: 700,
@@ -44,7 +41,19 @@ export const ClientsList: FC<ClientsListProps> = ({
 }) => {
   const [currentClient, setCurrentClient] =
     useState<IClientData>(defaultClientData);
-  const { isOpen, openModal, closeModal } = useModal();
+  const [currentPersonalIdNumber, setCurrentPersonalIdNumber] = useState("");
+
+  const {
+    isOpen: isEditModalOpen,
+    openModal: openEditModal,
+    closeModal: closeEditModal,
+  } = useModal();
+
+  const {
+    isOpen: isLoanModalOpen,
+    openModal: openLoanModal,
+    closeModal: closeLoanModal,
+  } = useModal();
 
   if (isLoading) {
     return <Loader />;
@@ -64,56 +73,47 @@ export const ClientsList: FC<ClientsListProps> = ({
             <TableCell align="left" style={tableHeadingStyle}>
               Pesel
             </TableCell>
-            <TableCell align="left" style={tableHeadingStyle}>
+            <TableCell align="center" style={tableHeadingStyle}>
               Usuń
             </TableCell>
-            <TableCell align="left" style={tableHeadingStyle}>
+            <TableCell align="center" style={tableHeadingStyle}>
               Edytuj
+            </TableCell>
+            <TableCell align="center" style={tableHeadingStyle}>
+              Pożyczka
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {clients.map((client) => (
-            <TableRow
+            <ClientListItem
               key={client?.uid}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell align="left">
-                <span
-                  style={{
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {client?.firstName} {client?.secondName}
-                </span>
-              </TableCell>
-              <TableCell align="left">{client?.email}</TableCell>
-              <TableCell align="left">{client?.personalIdNumber}</TableCell>
-              <TableCell align="left">
-                <DeleteIcon
-                  style={iconStyle}
-                  onClick={() => {
-                    deleteClient(client?.uid);
-                  }}
-                />
-              </TableCell>
-              <TableCell>
-                <EditIcon
-                  style={iconStyle}
-                  onClick={() => {
-                    setCurrentClient(client);
-                    openModal();
-                  }}
-                />
-              </TableCell>
-            </TableRow>
+              client={client}
+              onDeleteClick={() => {
+                deleteClient(client?.uid);
+                toast("success", "Klient został usunięty!", false);
+              }}
+              onEditClick={() => {
+                setCurrentClient(client);
+                openEditModal();
+              }}
+              onLoanAddClick={() => {
+                setCurrentPersonalIdNumber(client?.personalIdNumber);
+                openLoanModal();
+              }}
+            />
           ))}
         </TableBody>
       </Table>
       <EditClientModal
-        isOpen={isOpen}
-        closeModal={closeModal}
+        isOpen={isEditModalOpen}
+        closeModal={closeEditModal}
         editUserData={currentClient}
+      />
+      <CreateLoanModal
+        isOpen={isLoanModalOpen}
+        closeModal={closeLoanModal}
+        personalIdNumber={currentPersonalIdNumber}
       />
     </TableContainer>
   );

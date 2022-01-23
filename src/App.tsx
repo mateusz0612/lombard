@@ -5,6 +5,8 @@ import { Loader } from "./components/Loader";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import { GlobalStyle } from "./components/styled";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -36,6 +38,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

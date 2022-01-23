@@ -4,8 +4,15 @@ import { Label } from "../styled";
 import { useCreateLoanForm } from "./CreateLoanForm.hook";
 import * as Styled from "../ClientForm/ClientForm.styled";
 
-export const CreateLoanForm: FC = () => {
-  const { register, onLoanFormSubmit, errors, isValid } = useCreateLoanForm();
+interface CreateLoanFormProps {
+  personalIdNumber: string;
+}
+
+export const CreateLoanForm: FC<CreateLoanFormProps> = ({
+  personalIdNumber,
+}) => {
+  const { register, onLoanFormSubmit, errors, isValid } =
+    useCreateLoanForm(personalIdNumber);
 
   return (
     <Stack spacing={3} width={320}>
@@ -13,9 +20,8 @@ export const CreateLoanForm: FC = () => {
       <TextField
         label="Pesel"
         variant="outlined"
-        error={!!errors?.personalIdNumber}
-        helperText={errors?.personalIdNumber?.message}
-        {...register("personalIdNumber")}
+        value={personalIdNumber}
+        disabled
       />
       <TextField
         label="Stopa procentowa"

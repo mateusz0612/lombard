@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useUserContext } from "../../contexts/UserContext";
@@ -10,14 +10,14 @@ import {
   defaultCreateLoanFormData,
 } from "./CreateLoanForm.schema";
 import { Timestamp } from "firebase/firestore";
+import { toast } from "../../helpers";
 
-export const useCreateLoanForm = () => {
+export const useCreateLoanForm = (personalIdNumber: string) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
     watch,
-    reset
   } = useForm({
     defaultValues: defaultCreateLoanFormData,
     resolver: yupResolver(createLoanFormSchema),
@@ -29,28 +29,42 @@ export const useCreateLoanForm = () => {
 
   const user = useUserContext();
 
-  const values = [watch('personalIdNumber'), watch('interest'), watch('returnPrice')]
-
   const date = new Date();
+
+  // eslint-disable-next-line
+  const values = [watch("interest"), watch("returnPrice")];
 
   useEffect(() => {
     const isValidCheck = () => {
-      return Object.entries(values).every(value => !!value) && Object.entries(errors).length === 0
-    }
+      return (
+        Object.entries(values).every((value) => !!value) &&
+        Object.entries(errors).length === 0
+      );
+    };
 
     setIsValid(() => isValidCheck());
-  }, [values]);
+  }, [errors, values]);
 
   const onLoanFormSubmit = handleSubmit((data) => {
-    const payload = { ...data, employeeId: user?.user?.uid, dateOfLoan: Timestamp.fromDate(date) }
+    const payload = {
+      ...data,
+      employeeId: user?.user?.uid,
+      dateOfLoan: Timestamp.fromDate(date),
+      personalIdNumber,
+    };
 
-    postNewDoc({ collectionName: Collections.LOANS, payload: payload }).then(res => navigate(`/loan-info/${res.id}`));
+    postNewDoc({ collectionName: Collections.LOANS, payload: payload }).then(
+      (res) => {
+        navigate(`/employee-panel-loan-info/${res.id}`);
+        toast("success", "Dodano pożyczkę!", false);
+      }
+    );
   });
 
   return {
     register,
     onLoanFormSubmit,
     errors,
-    isValid
+    isValid,
   };
 };
