@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, AuthError } from "firebase/auth";
 import { auth } from "../firebase";
 import { IUserCredentials } from "../types";
 import { Paths } from "../routes";
-import { getRegistrationErrorMessage } from "../helpers";
+import { getRegistrationErrorMessage, toast } from "../helpers";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ export const useLogin = () => {
 
   const handleLoginSucces = () => {
     navigate(Paths.EmployeePanel);
+    toast("success", "Pomyślnie zalogowano!", false);
   };
 
   const login = async (userCredentials: IUserCredentials) => {

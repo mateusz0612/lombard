@@ -1,5 +1,6 @@
 import { doc, deleteDoc } from "firebase/firestore";
 import { Collections, db } from "../firebase";
+import { toast } from "../helpers";
 
 interface IDelete {
   uid: string;
@@ -11,6 +12,7 @@ export const useDelete = () => {
     try {
       await deleteDoc(doc(db, collection, uid));
     } catch (e) {
+      toast("error", "Coś poszło nie tak. Spróbuj panownie.", false);
       console.error(e);
     }
   };

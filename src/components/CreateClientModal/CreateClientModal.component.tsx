@@ -3,17 +3,10 @@ import { Modal } from "../Modal";
 import { Button, Stack } from "@mui/material";
 import { useRegister } from "../../hooks/useRegister";
 import { ClientForm } from "../ClientForm";
-import { IRegisterClientData } from "../../types";
+import { IRegisterClientData, IModal } from "../../types";
+import { toast } from "../../helpers";
 
-interface CreateClientModalProps {
-  isOpen: boolean;
-  closeModal: () => void;
-}
-
-export const CreateClientModal: FC<CreateClientModalProps> = ({
-  isOpen,
-  closeModal,
-}) => {
+export const CreateClientModal: FC<IModal> = ({ isOpen, closeModal }) => {
   const { registerUser, isRegisterProgressing, registerError } = useRegister();
 
   const onModalClose = () => {
@@ -23,6 +16,7 @@ export const CreateClientModal: FC<CreateClientModalProps> = ({
   const onUserCreate = async (userData: IRegisterClientData) => {
     await registerUser(userData);
     closeModal();
+    toast("success", "Dodano klienta!", false);
   };
 
   return (

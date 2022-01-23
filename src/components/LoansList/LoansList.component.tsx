@@ -10,14 +10,19 @@ import {
 } from "@mui/material";
 import { Loader } from "../Loader";
 import { ILoan } from "../../types";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
+import { toast } from "../../helpers";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 interface LoansListProps {
   loans: ILoan[];
   isLoading: boolean;
   deleteLoan: (uid: string) => void;
 }
+
+const tableHeadingStyles: React.CSSProperties = {
+  fontWeight: 700,
+};
 
 export const LoansList: FC<LoansListProps> = ({
   loans,
@@ -33,12 +38,25 @@ export const LoansList: FC<LoansListProps> = ({
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Kod</TableCell>
-            <TableCell align="left">PESEL</TableCell>
-            <TableCell align="left">Id pracownika</TableCell>
-            <TableCell align="left">Data wzięcia pożyczki</TableCell>
-            <TableCell align="left">Stopa procentowa</TableCell>
-            <TableCell align="left">Kwota do zwrotu</TableCell>
+            <TableCell style={tableHeadingStyles}>Kod</TableCell>
+            <TableCell align="left" style={tableHeadingStyles}>
+              PESEL
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyles}>
+              Id pracownika
+            </TableCell>
+            <TableCell align="center" style={tableHeadingStyles}>
+              Data wzięcia pożyczki
+            </TableCell>
+            <TableCell align="center" style={tableHeadingStyles}>
+              Stopa procentowa
+            </TableCell>
+            <TableCell align="center" style={tableHeadingStyles}>
+              Kwota do zwrotu
+            </TableCell>
+            <TableCell align="center" style={tableHeadingStyles}>
+              Rozlicz
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,20 +68,21 @@ export const LoansList: FC<LoansListProps> = ({
               <TableCell component="th" scope="row">
                 {loan.code}
               </TableCell>
-              <TableCell align="left">
-                {loan.personalIdNumber}
-              </TableCell>
+              <TableCell align="left">{loan.personalIdNumber}</TableCell>
               <TableCell align="left">{loan.employeeId}</TableCell>
-              <TableCell align="left">{format(loan.dateOfLoan.toDate(), 'MM/dd/yyyy')}</TableCell>
-              <TableCell align="left">{loan.interest}</TableCell>
-              <TableCell align="left">{loan.returnPrice}</TableCell>
-              <TableCell align="left">
+              <TableCell align="center">
+                {format(loan.dateOfLoan.toDate(), "MM/dd/yyyy")}
+              </TableCell>
+              <TableCell align="center">{loan.interest}</TableCell>
+              <TableCell align="center">{loan.returnPrice}</TableCell>
+              <TableCell align="center">
                 <div
                   onClick={() => {
                     deleteLoan(loan?.code);
+                    toast("success", "Rozliczono pożyczkę", false);
                   }}
                 >
-                  <DeleteIcon
+                  <CheckCircleOutlineIcon
                     style={{
                       cursor: "pointer",
                     }}

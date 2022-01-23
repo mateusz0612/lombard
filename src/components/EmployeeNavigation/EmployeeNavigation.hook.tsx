@@ -17,7 +17,7 @@ export const useEmployeePanelNavigation = () => {
       {
         label: "Pożyczki",
         icon: MoneyIcon,
-        routeTo: "/loan-panel-loans",
+        routeTo: Paths.EmployeePanelLoans,
       },
       {
         label: "Przedmioty",

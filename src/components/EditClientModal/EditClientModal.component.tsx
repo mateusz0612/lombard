@@ -3,13 +3,12 @@ import { Stack, Button } from "@mui/material";
 import { ClientForm } from "../ClientForm";
 import { Modal } from "../Modal";
 import { useEditClient } from "../../hooks/useEditClient";
-import { IClientData, IRegisterClientData } from "../../types";
+import { IClientData, IRegisterClientData, IModal } from "../../types";
+import { toast } from "../../helpers";
 
-interface EditClientModalProps {
-  isOpen: boolean;
-  closeModal: () => void;
+type EditClientModalProps = {
   editUserData: IClientData;
-}
+} & IModal;
 
 export const EditClientModal: FC<EditClientModalProps> = ({
   isOpen,
@@ -25,6 +24,7 @@ export const EditClientModal: FC<EditClientModalProps> = ({
   const onEditClient = (data: IRegisterClientData) => {
     editClient(editUserData?.uid, data);
     closeModal();
+    toast("success", "Zaktualizowano klienta!", false);
   };
 
   return (
