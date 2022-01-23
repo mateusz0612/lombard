@@ -7,11 +7,14 @@ export const useClients = () => {
   const [clients, setClients] = useState<IClientData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const sortClients = (clients: IClientData[]) =>
+    clients.sort((a, b) => (a.firstName < b.firstName ? -1 : 1));
+
   useEffect(() => {
     const unsub = onSnapshot(
       collection(db, Collections.USERS),
       (usersCollections) => {
-        const clients: IClientData[] = [];
+        const snapshotClients: IClientData[] = [];
 
         for (const user of usersCollections?.docs) {
           const clientData: IClientData = {
@@ -22,10 +25,10 @@ export const useClients = () => {
             uid: user?.id,
           };
 
-          clients.push(clientData);
+          snapshotClients.push(clientData);
         }
 
-        setClients(clients);
+        setClients(sortClients(snapshotClients));
         setIsLoading(false);
       }
     );

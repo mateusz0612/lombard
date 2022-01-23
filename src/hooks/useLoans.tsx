@@ -21,8 +21,6 @@ export const useLoans = ({ code }: ICode) => {
       end: current
     })
 
-    console.log(start, current)
-
     let rc = price;
     for (let m = 0; m < (months as number + (years as number) * 12); m++) {
       rc *= (interest / 100) + 1

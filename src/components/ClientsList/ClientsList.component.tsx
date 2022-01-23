@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   TableContainer,
   Table,
@@ -10,7 +10,10 @@ import {
 } from "@mui/material";
 import { Loader } from "../Loader";
 import { IClientData } from "../../types";
+import { EditClientModal } from "../EditClientModal";
+import { useModal } from "../../hooks/useModal";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface ClientsListProps {
   clients: IClientData[];
@@ -18,11 +21,31 @@ interface ClientsListProps {
   deleteClient: (uid: string) => void;
 }
 
+const iconStyle = {
+  cursor: "pointer",
+};
+
+const tableHeadingStyle = {
+  fontWeight: 700,
+};
+
+const defaultClientData: IClientData = {
+  email: "",
+  firstName: "",
+  secondName: "",
+  personalIdNumber: "",
+  uid: "",
+};
+
 export const ClientsList: FC<ClientsListProps> = ({
   clients,
   isLoading,
   deleteClient,
 }) => {
+  const [currentClient, setCurrentClient] =
+    useState<IClientData>(defaultClientData);
+  const { isOpen, openModal, closeModal } = useModal();
+
   if (isLoading) {
     return <Loader />;
   }
@@ -32,11 +55,21 @@ export const ClientsList: FC<ClientsListProps> = ({
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell align="left">Imię i nazwisko</TableCell>
-            <TableCell align="left">Email</TableCell>
-            <TableCell align="left">Pesel</TableCell>
-            <TableCell align="left">Usuń</TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Imię i nazwisko
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Email
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Pesel
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Usuń
+            </TableCell>
+            <TableCell align="left" style={tableHeadingStyle}>
+              Edytuj
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -45,31 +78,43 @@ export const ClientsList: FC<ClientsListProps> = ({
               key={client?.uid}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {client?.uid}
-              </TableCell>
               <TableCell align="left">
-                {client?.firstName} {client?.secondName}
+                <span
+                  style={{
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {client?.firstName} {client?.secondName}
+                </span>
               </TableCell>
               <TableCell align="left">{client?.email}</TableCell>
               <TableCell align="left">{client?.personalIdNumber}</TableCell>
               <TableCell align="left">
-                <div
+                <DeleteIcon
+                  style={iconStyle}
                   onClick={() => {
                     deleteClient(client?.uid);
                   }}
-                >
-                  <DeleteIcon
-                    style={{
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
+                />
+              </TableCell>
+              <TableCell>
+                <EditIcon
+                  style={iconStyle}
+                  onClick={() => {
+                    setCurrentClient(client);
+                    openModal();
+                  }}
+                />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <EditClientModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        editUserData={currentClient}
+      />
     </TableContainer>
   );
 };
