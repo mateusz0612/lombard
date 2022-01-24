@@ -7,29 +7,42 @@ import { theme } from "../../components/styled";
 import { useLoans } from "../../hooks/useLoans";
 import { LoanInfo } from "../../components/LoanInfo/LoanInfo.component";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loader } from "../../components/Loader";
 import { toast } from "../../helpers";
 
-export const LoanDetails: FC = () => {
+interface LoanDetailsProps {
+  isEmployeeView: boolean;
+}
+
+export const LoanDetails: FC<LoanDetailsProps> = ({ isEmployeeView }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const { wrapperDirection, isMobile } = useEmployeePanel();
   const { loans, isLoading } = useLoans({ code: params.code });
+
+  const onGoBackClick = () => navigate(-1);
 
   const onCopyLoanCodeClick = () => {
     navigator.clipboard.writeText(loans[0]?.code);
     toast("success", "Pomyślnie skopiowano kod pożyczki", false);
   };
 
+  const wrapperWidth = isMobile || !isEmployeeView ? "100%" : "90%";
+  const wrapperMarginLeft =
+    !isMobile && isEmployeeView ? theme.employeePanelPageMargin : 0;
+
   return (
     <Stack direction={wrapperDirection} height="100%">
-      <EmployeeNavigation />
+      {isEmployeeView && <EmployeeNavigation />}
       <Stack
         justifyContent="flex-start"
         alignItems="center"
-        width={isMobile ? "100%" : "90%"}
+        width={wrapperWidth}
         mt={3}
-        ml={!isMobile ? theme.employeePanelPageMargin : 0}
+        ml={wrapperMarginLeft}
       >
+        <Button onClick={onGoBackClick}>Wróć</Button>
         <Label fontSize={24} fontWeight={700}>
           Informacje o pożyczce
         </Label>
@@ -45,13 +58,15 @@ export const LoanDetails: FC = () => {
           ) : (
             <Stack spacing={3} justifyContent="center" alignItems="center">
               <LoanInfo loanInfo={loans[0]} />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={onCopyLoanCodeClick}
-              >
-                Skopiuj kod pożyczki
-              </Button>
+              {isEmployeeView && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={onCopyLoanCodeClick}
+                >
+                  Skopiuj kod pożyczki
+                </Button>
+              )}
             </Stack>
           )}
         </Stack>
