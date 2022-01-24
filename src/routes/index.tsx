@@ -13,7 +13,8 @@ export enum Paths {
   EmployeePanel = "/employee-panel",
   EmployeePanelClients = "/employee-panel-clients",
   EmployeePanelLoans = "/employee-panel-loans",
-  LoanInfo = "/employee-panel-loan-info/:code",
+  EmployeePanelLoanInfo = "/employee-panel-loan-info/:code",
+  LoanInfo = "/loan-info/:code",
 }
 
 export const RouteList = [
@@ -26,6 +27,11 @@ export const RouteList = [
     key={Paths.EmployeeLogin}
     path={Paths.EmployeeLogin}
     element={<EmployeeLogin />}
+  />,
+  <Route
+    key={Paths.LoanInfo}
+    path={Paths.LoanInfo}
+    element={<LoanDetails isEmployeeView={false} />}
   />,
 ];
 
@@ -46,8 +52,8 @@ export const ProtectedRouteList = [
     element={<LoanPanelLoans />}
   />,
   <Route
-    key={Paths.LoanInfo}
-    path={Paths.LoanInfo}
-    element={<LoanDetails />}
+    key={Paths.EmployeePanelLoanInfo}
+    path={Paths.EmployeePanelLoanInfo}
+    element={<LoanDetails isEmployeeView />}
   />,
 ];

@@ -89,6 +89,7 @@ export const ClientsList: FC<ClientsListProps> = ({ clients, isLoading }) => {
           <b>
             {currentClient?.firstName} {currentClient?.secondName}
           </b>
+          ?
         </Label>
       </ConfirmationModal>
     </TableContainer>
