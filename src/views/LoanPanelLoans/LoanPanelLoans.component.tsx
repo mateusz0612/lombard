@@ -15,7 +15,11 @@ export const LoanPanelLoans: FC = () => {
   const { deleteItem } = useDelete();
 
   const deleteLoan = (uid: string) => {
-    deleteItem({ uid, collection: Collections.LOANS });
+    deleteItem({
+      uid,
+      collection: Collections.LOANS,
+      successToastMessage: "Rozliczono pożyczkę",
+    });
   };
 
   return (

@@ -10,7 +10,6 @@ import {
   defaultCreateLoanFormData,
 } from "./CreateLoanForm.schema";
 import { Timestamp } from "firebase/firestore";
-import { toast } from "../../helpers";
 
 export const useCreateLoanForm = (personalIdNumber: string) => {
   const {
@@ -53,12 +52,13 @@ export const useCreateLoanForm = (personalIdNumber: string) => {
       personalIdNumber,
     };
 
-    postNewDoc({ collectionName: Collections.LOANS, payload: payload }).then(
-      (res) => {
-        navigate(`/employee-panel-loan-info/${res.id}`);
-        toast("success", "Dodano pożyczkę!", false);
-      }
-    );
+    postNewDoc({
+      collectionName: Collections.LOANS,
+      payload: payload,
+      successToastMessage: "Dodano pożyczkę!",
+    }).then((res) => {
+      navigate(`/employee-panel-loan-info/${res.id}`);
+    });
   });
 
   return {

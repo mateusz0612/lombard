@@ -18,6 +18,7 @@ export const useEditClient = () => {
         collectionName: Collections.USERS,
         docId: userUid,
         payload: newUserData,
+        successToastMessage: "Dodano klienta!",
       });
     } catch (error) {
       setClientEditingError((error as Error)?.message);
