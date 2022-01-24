@@ -7,19 +7,12 @@ import { CreateClientModal } from "../../components/CreateClientModal";
 import { useEmployeePanel } from "../EmployeePanel";
 import { useClients } from "../../hooks/useClients";
 import { useModal } from "../../hooks/useModal";
-import { useDelete } from "../../hooks/useDelete";
-import { Collections } from "../../firebase";
 import { theme } from "../../components/styled";
 
 export const EmployeePanelClients: FC = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const { wrapperDirection, isMobile } = useEmployeePanel();
   const { clients, isLoading } = useClients();
-  const { deleteItem } = useDelete();
-
-  const deleteClient = (uid: string) => {
-    deleteItem({ uid, collection: Collections.USERS });
-  };
 
   return (
     <Stack direction={wrapperDirection} height="100%">
@@ -42,11 +35,7 @@ export const EmployeePanelClients: FC = () => {
           justifyContent="center"
           alignItems="center"
         >
-          <ClientsList
-            clients={clients}
-            isLoading={isLoading}
-            deleteClient={deleteClient}
-          />
+          <ClientsList clients={clients} isLoading={isLoading} />
         </Stack>
         <CreateClientModal isOpen={isOpen} closeModal={closeModal} />
       </Stack>
