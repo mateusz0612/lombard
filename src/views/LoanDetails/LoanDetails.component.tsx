@@ -51,6 +51,18 @@ export const LoanDetails: FC<LoanDetailsProps> = ({ isEmployeeView }) => {
   const wrapperMarginLeft =
     !isMobile && isEmployeeView ? theme.employeePanelPageMargin : 0;
 
+  const loanNotFound = !isLoading && loans.length === 0;
+
+  if (loanNotFound) {
+    return (
+      <Stack justifyContent="center" alignItems="center" minHeight="90vh">
+        <Label fontSize={24} fontWeight={700}>
+          Nie znaleziono pożyczki o takim kodzie :(
+        </Label>
+      </Stack>
+    );
+  }
+
   return (
     <Stack direction={wrapperDirection} height="100%">
       {isEmployeeView && <EmployeeNavigation />}
