@@ -22,8 +22,8 @@ export const LoanDetails: FC<LoanDetailsProps> = ({ isEmployeeView }) => {
   const params = useParams();
   const navigate = useNavigate();
   const { wrapperDirection, isMobile } = useEmployeePanel();
-  const { loans, isLoading: loansLoading } = useLoans({ code: params.code });
-  const { where, isLoading: itemLoading } = useWhere();
+  const { loans, isLoading } = useLoans({ code: params.code });
+  const { where } = useWhere();
 
   const onGoBackClick = () => navigate(-1);
 
@@ -50,7 +50,6 @@ export const LoanDetails: FC<LoanDetailsProps> = ({ isEmployeeView }) => {
   const wrapperWidth = isMobile || !isEmployeeView ? "100%" : "90%";
   const wrapperMarginLeft =
     !isMobile && isEmployeeView ? theme.employeePanelPageMargin : 0;
-  const isLoading = loansLoading || itemLoading;
 
   return (
     <Stack direction={wrapperDirection} height="100%">

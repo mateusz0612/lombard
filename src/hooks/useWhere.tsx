@@ -16,8 +16,6 @@ interface IWhere {
 }
 
 export const useWhere = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
   const where = async ({ collection, fieldPath, value, operator }: IWhere) => {
     const itemQuery = query(
       fcollection(db, collection),
@@ -26,10 +24,8 @@ export const useWhere = () => {
 
     const itemDocs = await getDocs(itemQuery);
 
-    setIsLoading(false);
-
     return itemDocs;
   };
 
-  return { where, isLoading };
+  return { where };
 };
