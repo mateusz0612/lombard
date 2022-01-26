@@ -5,7 +5,7 @@ export const defaultCreateLoanFormData: Omit<
   ILoan,
   "code" | "id" | "employeeId" | "dateOfLoan" | "personalIdNumber"
 > &
-  Omit<IItem, "uid"> = {
+  Omit<IItem, "uid" | "loanId"> = {
   interest: 0,
   returnPrice: 0,
   name: "",

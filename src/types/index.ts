@@ -47,4 +47,5 @@ export interface IItem {
   uid: string;
   name: string;
   description: string;
+  loanId: string;
 }

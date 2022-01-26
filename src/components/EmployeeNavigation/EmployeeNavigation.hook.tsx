@@ -22,7 +22,7 @@ export const useEmployeePanelNavigation = () => {
       {
         label: "Przedmioty",
         icon: LocalLaundryServiceIcon,
-        routeTo: "/",
+        routeTo: Paths.EmployeePanelItems,
       },
       {
         label: "Klienci",

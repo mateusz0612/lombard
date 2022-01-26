@@ -2,6 +2,7 @@ import { TableCell } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
 import { useDelete } from "../../hooks/useDelete";
+import { useWhere } from "../../hooks/useWhere";
 import { Collections } from "../../firebase";
 
 const tableHeadingStyles: React.CSSProperties = {
@@ -39,6 +40,7 @@ export const useLoanList = () => {
   const navigate = useNavigate();
   const { isOpen, openModal, closeModal } = useModal();
   const { deleteItem } = useDelete();
+  const { where } = useWhere();
 
   const onLoanInfoClick = (loanCode: string) =>
     navigate(`/employee-panel-loan-info/${loanCode}`);
@@ -47,7 +49,26 @@ export const useLoanList = () => {
     closeModal();
   };
 
-  const onDeleteLoanConfirm = (code: string) => {
+  const getItemByLoanIdCode = async (code: string) => {
+    const itemDoc = await where({
+      collection: Collections.ITEMS,
+      fieldPath: "loanId",
+      operator: "==",
+      value: code,
+    });
+    const itemId = itemDoc?.docs[0];
+
+    return itemId?.id;
+  };
+
+  const onDeleteLoanConfirm = async (code: string) => {
+    const itemId = await getItemByLoanIdCode(code);
+
+    deleteItem({
+      uid: itemId,
+      collection: Collections.ITEMS,
+    });
+
     deleteItem({
       uid: code,
       collection: Collections.LOANS,
