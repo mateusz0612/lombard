@@ -34,15 +34,6 @@ export interface ILoan {
   employeeId: string;
 }
 
-export interface IItem {
-  id: string;
-  name: string;
-  personalIdNumber: string;
-  price: number;
-  description: string;
-  employeeId: string;
-}
-
 export interface ICode {
   code?: string;
 }
@@ -50,4 +41,10 @@ export interface ICode {
 export interface IModal {
   isOpen: boolean;
   closeModal: () => void;
+}
+
+export interface IItem {
+  uid: string;
+  name: string;
+  description: string;
 }

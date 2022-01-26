@@ -44,20 +44,34 @@ export const useCreateLoanForm = (personalIdNumber: string) => {
     setIsValid(() => isValidCheck());
   }, [errors, values]);
 
-  const onLoanFormSubmit = handleSubmit((data) => {
-    const payload = {
-      ...data,
+  const onLoanFormSubmit = handleSubmit(async (data) => {
+    const loanPayload = {
       employeeId: user?.user?.uid,
       dateOfLoan: Timestamp.fromDate(date),
       personalIdNumber,
+      returnPrice: data?.returnPrice,
+      interest: data?.interest,
+    };
+
+    const loanRef = await postNewDoc({
+      collectionName: Collections.LOANS,
+      payload: loanPayload,
+      successToastMessage: "Dodano pożyczkę!",
+    });
+
+    const loanId = loanRef?.id;
+
+    const itemPayload = {
+      name: data?.name,
+      description: data?.description,
+      loanId,
     };
 
     postNewDoc({
-      collectionName: Collections.LOANS,
-      payload: payload,
-      successToastMessage: "Dodano pożyczkę!",
-    }).then((res) => {
-      navigate(`/employee-panel-loan-info/${res.id}`);
+      collectionName: Collections.ITEMS,
+      payload: itemPayload,
+    }).then(() => {
+      navigate(`/employee-panel-loan-info/${loanId}`);
     });
   });
 

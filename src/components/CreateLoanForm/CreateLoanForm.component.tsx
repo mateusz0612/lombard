@@ -24,6 +24,22 @@ export const CreateLoanForm: FC<CreateLoanFormProps> = ({
         disabled
       />
       <TextField
+        label="Nazwa zastawionego przedmiotu"
+        variant="outlined"
+        error={!!errors?.name}
+        helperText={errors?.name?.message}
+        {...register("name")}
+      />
+      <TextField
+        label="Krótki opis przedmiotu"
+        variant="outlined"
+        error={!!errors?.description}
+        helperText={errors?.description?.message}
+        rows={5}
+        multiline
+        {...register("description")}
+      />
+      <TextField
         label="Stopa procentowa"
         variant="outlined"
         type="number"

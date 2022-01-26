@@ -6,7 +6,7 @@ interface IPost {
   collectionName: string;
   docId: string;
   payload: Object;
-  successToastMessage: string;
+  successToastMessage?: string;
 }
 
 export const usePost = () => {
@@ -20,12 +20,13 @@ export const usePost = () => {
       await setDoc(doc(db, collectionName, docId), {
         ...payload,
       });
-      toast("success", successToastMessage, false);
+      successToastMessage && toast("success", successToastMessage, false);
     } catch (error) {
       toast("error", "Coś poszło nie tak. Spróbuj panownie", false);
       throw new Error(error as string);
     }
   };
+
   const postNewDoc = async ({
     collectionName,
     payload,
@@ -35,12 +36,13 @@ export const usePost = () => {
       const docRef = await addDoc(collection(db, collectionName), {
         ...payload,
       });
-      toast("success", successToastMessage, false);
+      successToastMessage && toast("success", successToastMessage, false);
       return docRef;
     } catch (error) {
       toast("error", "Coś poszło nie tak. Spróbuj panownie", false);
       throw new Error(error as string);
     }
   };
+
   return { postDoc, postNewDoc };
 };
